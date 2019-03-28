@@ -152,21 +152,15 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
                         icon={"fa-tag"}
                         handler={this.handleTagHotKey} />);
                 })}
-                <SplitPane split="vertical"
-                    defaultSize={this.state.thumbnailSize.width}
+                <SplitPane split="horizontal"
+                    primary="second"
+                    defaultSize={this.state.thumbnailSize.height}
                     minSize={100}
                     maxSize={400}
                     paneStyle={{ display: "flex" }}
+                    style={{ overflow: "scroll" }}
                     onChange={this.onSideBarResize}
                     onDragFinished={this.onSideBarResizeComplete}>
-                    <div className="editor-page-sidebar bg-lighter-1">
-                        <EditorSideBar
-                            assets={rootAssets}
-                            selectedAsset={selectedAsset ? selectedAsset.asset : null}
-                            onAssetSelected={this.selectAsset}
-                            thumbnailSize={this.state.thumbnailSize}
-                        />
-                    </div>
                     <div className="editor-page-content">
                         <div className="editor-page-content-header">
                             <EditorToolbar project={this.props.project}
@@ -193,16 +187,22 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
                                 </Canvas>
                             }
                         </div>
-                        <div>
-                            <EditorFooter
+                    </div>
+                    <div className="editor-page-sidebar bg-lighter-1">
+                            <EditorSideBar
+                                assets={rootAssets}
+                                selectedAsset={selectedAsset ? selectedAsset.asset : null}
+                                onAssetSelected={this.selectAsset}
+                                thumbnailSize={this.state.thumbnailSize}
+                            />
+                    </div>
+                            {/* <EditorFooter
                                 tags={this.props.project.tags}
                                 lockedTags={this.state.lockedTags}
                                 onTagsChanged={this.onFooterChange}
                                 onTagClicked={this.onTagClicked}
                                 onCtrlTagClicked={this.onCtrlTagClicked}
-                            />
-                        </div>
-                    </div>
+                            /> */}
                 </SplitPane>
             </div>
         );

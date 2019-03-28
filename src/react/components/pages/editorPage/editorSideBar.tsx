@@ -1,5 +1,5 @@
 import React from "react";
-import { AutoSizer, List } from "react-virtualized";
+import { AutoSizer, List, Grid } from "react-virtualized";
 import { IAsset, AssetState, ISize } from "../../../../models/applicationState";
 import { AssetPreview } from "../../common/assetPreview/assetPreview";
 import { strings } from "../../../../common/strings";
@@ -44,14 +44,16 @@ export default class EditorSideBar extends React.Component<IEditorSideBarProps, 
             <div className="editor-page-sidebar-nav">
                 <AutoSizer>
                     {({ height, width }) => (
-                        <List
+                        <Grid
                             ref={this.listRef}
                             className="asset-list"
                             height={height}
                             width={width}
-                            rowCount={this.props.assets.length}
+                            columnWidth={100}
+                            columnCount={this.props.assets.length}
+                            rowCount={1}
                             rowHeight={() => this.getRowHeight(width)}
-                            rowRenderer={this.rowRenderer}
+                            cellRenderer={this.cellRenderer}
                             overscanRowCount={2}
                             scrollToIndex={this.state.scrollToIndex}
                         />
@@ -77,7 +79,8 @@ export default class EditorSideBar extends React.Component<IEditorSideBarProps, 
     }
 
     private getRowHeight = (width: number) => {
-        return width / (4 / 3) + 16;
+        // return width / (3 / 4) + 16;
+        return 100;
     }
 
     private selectAsset = (selectedAsset: IAsset): void => {
@@ -86,7 +89,7 @@ export default class EditorSideBar extends React.Component<IEditorSideBarProps, 
         this.setState({
             scrollToIndex,
         }, () => {
-            this.listRef.current.forceUpdateGrid();
+            this.forceUpdate();
         });
     }
 
@@ -95,8 +98,8 @@ export default class EditorSideBar extends React.Component<IEditorSideBarProps, 
         this.props.onAssetSelected(asset);
     }
 
-    private rowRenderer = ({ key, index, style }): JSX.Element => {
-        const asset = this.props.assets[index];
+    private cellRenderer = ({ key, columnIndex, style }): JSX.Element => {
+        const asset = this.props.assets[columnIndex];
         const selectedAsset = this.props.selectedAsset;
 
         return (

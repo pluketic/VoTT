@@ -113,9 +113,6 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
         thumbnailSize: this.props.appSettings.thumbnailSize || { width: 175, height: 155 },
     };
 
-    // Use Electron Remote to load and use TF.js model from main electron process
-    private remote: Electron.Remote;
-
     // TensorFlow model used for Active Learning
     private model: ObjectDetection;
 
@@ -133,8 +130,10 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
         }
 
         // Load standard TensorFlow.js SSD Model trained on COCO dataset
+        const infoId = toast.info(`Loading model...`, { autoClose: false });
         this.model = new ObjectDetection();
         await this.model.load("/Users/jacopo/CocoSSD");
+        toast.dismiss(infoId);
     }
 
     public async componentDidUpdate() {

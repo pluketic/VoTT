@@ -224,6 +224,7 @@ export const english: IAppStrings = {
             nextAsset: "Next Asset",
             saveProject: "Save Project",
             exportProject: "Export Project",
+            activeLearning: "Auto Detect",
         },
         videoPlayer: {
             previousTaggedFrame: {

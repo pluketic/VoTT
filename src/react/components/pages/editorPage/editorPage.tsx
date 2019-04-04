@@ -5,6 +5,8 @@ import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 import SplitPane from "react-split-pane";
+import * as shortid from "shortid";
+import { toast } from "react-toastify";
 import { bindActionCreators } from "redux";
 import { SelectionMode } from "vott-ct/lib/js/CanvasTools/Interface/ISelectorSettings";
 import HtmlFileReader from "../../../../common/htmlFileReader";
@@ -12,7 +14,7 @@ import { strings } from "../../../../common/strings";
 import {
     AssetState, AssetType, EditorMode, IApplicationState,
     IAppSettings, IAsset, IAssetMetadata, IProject, IRegion,
-    ISize, ITag,
+    ISize, ITag, RegionType, IProjectActiveLearningSettings,
 } from "../../../../models/applicationState";
 import { IToolbarItemRegistration, ToolbarItemFactory } from "../../../../providers/toolbar/toolbarItemFactory";
 import IApplicationActions, * as applicationActions from "../../../../redux/actions/applicationActions";
@@ -29,6 +31,8 @@ import CanvasHelpers from "./canvasHelpers";
 import "./editorPage.scss";
 import EditorSideBar from "./editorSideBar";
 import { EditorToolbar } from "./editorToolbar";
+import { ObjectDetection, DetectedObject } from "../../../../providers/activeLearning/objectDetection";
+import { Env } from "../../../../common/environment";
 // tslint:disable-next-line:no-var-requires
 const tagColors = require("../../common/tagColors.json");
 
@@ -109,7 +113,8 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
         assets: [],
         childAssets: [],
         editorMode: EditorMode.Rectangle,
-        additionalSettings: { videoSettings: (this.props.project) ? this.props.project.videoSettings : null },
+        additionalSettings: { videoSettings: (this.props.project) ? this.props.project.videoSettings : null,
+            activeLearningSettings: (this.props.project) ? this.props.project.activeLearningSettings : null },
         thumbnailSize: this.props.appSettings.thumbnailSize || { width: 175, height: 155 },
     };
 

@@ -101,7 +101,7 @@
                                         "url"
                                     ]
                                 },
-                                "modelPath": {
+                                "modelUrl": {
                                     "title": "Model URL: ",
                                     "type": "string",
                                     "default": "http://"

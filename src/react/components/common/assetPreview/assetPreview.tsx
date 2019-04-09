@@ -4,6 +4,7 @@ import { strings } from "../../../../common/strings";
 import { ImageAsset } from "./imageAsset";
 import { VideoAsset } from "./videoAsset";
 import { TFRecordAsset } from "./tfrecordAsset";
+import { AspectRatio } from "../aspectRatio/aspectRatio";
 
 export type ContentSource = HTMLImageElement | HTMLVideoElement;
 
@@ -91,6 +92,10 @@ export class AssetPreview extends React.Component<IAssetPreviewProps, IAssetPrev
         const { loaded, hasError } = this.state;
         const size = this.props.asset.size;
         const classNames = ["asset-preview"];
+        const aspectRatio = size ? size.width / size.height : null;
+        const width = size ? size.width : null;
+        const height = size ? size.height : null;
+
         if (size) {
             if (size.width > size.height) {
                 classNames.push("landscape");
@@ -116,7 +121,9 @@ export class AssetPreview extends React.Component<IAssetPreviewProps, IAssetPrev
                         </div>
                     }
                     {!hasError &&
-                        this.renderAsset()
+                        <AspectRatio ratio={aspectRatio} maxWidth={width} maxHeight={height}>
+                            {this.renderAsset()}
+                        </AspectRatio>
                     }
                 </div>
             </div>

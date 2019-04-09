@@ -4,7 +4,7 @@ import { CanvasTools } from "vott-ct";
 import { RegionData } from "vott-ct/lib/js/CanvasTools/Core/RegionData";
 import {
     EditorMode, IAssetMetadata,
-    IProject, IRegion, RegionType, IAsset,
+    IProject, IRegion, RegionType,
 } from "../../../../models/applicationState";
 import CanvasHelpers from "./canvasHelpers";
 import { AssetPreview, ContentSource } from "../../common/assetPreview/assetPreview";
